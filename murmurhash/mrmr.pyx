@@ -7,13 +7,14 @@ cdef extern from "murmurhash/MurmurHash3.h":
     void MurmurHash3_x64_128(void * key, int len, uint32_t seed, void* out) nogil
 
 cdef extern from "murmurhash/MurmurHash2.h":
+    uint32_t MurmurHash2( const void * key, int len, uint32_t seed ) nogil
     uint64_t MurmurHash64A(void * key, int length, uint32_t seed) nogil
     uint64_t MurmurHash64B(void * key, int length, uint32_t seed) nogil
 
 
 cdef uint32_t hash32(void* key, int length, uint32_t seed) nogil:
     cdef int32_t out
-    MurmurHash3_x86_32(key, length, seed, &out)
+    out = MurmurHash2(key, length, seed)
     return out
 
 
